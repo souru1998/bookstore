@@ -176,6 +176,8 @@ def cartupdate(request):
     newprice = float(price)*int(quantity)
     carttable.objects.filter(id=cart_id).update(quantity=quantity,total=newprice)
     return render(request,'shop.html')
+
+
 # _____________________________________________________________________________________
 
 #cart remove
