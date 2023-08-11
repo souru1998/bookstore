@@ -1,0 +1,130 @@
+{% extends 'admin/adminbase.html' %}
+{% block content %}
+<style>
+	
+	form {
+		max-width: 400px;
+		margin: 30px auto;
+		padding: 20px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		background-color: #fff;
+	}
+
+	.input_field {
+		margin-bottom: 15px;
+	}
+
+	.input_field label {
+		display: block;
+		margin-bottom: 5px;
+		font-weight: bold;
+	}
+
+	.input_field input[type="text"],
+	.input_field select {
+		width: 100%;
+		padding: 8px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		transition: border-color 0.3s ease;
+	}
+
+	.input_field input[type="file"] {
+		padding: 4px;
+	}
+
+	.input_field input[type="text"]:focus,
+	.input_field select:focus {
+		border-color: #39f;
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	.text-center button {
+		background-color: #4CAF50;
+		color: #fff;
+		padding: 10px 20px;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+	}
+
+	.text-center button:hover {
+		background-color: #45a049;
+	}
+</style>
+<!--sidebar end-->
+<!--main content start-->
+<section id="main-content">
+	<section class="wrapper">
+		<div class="typo-agile">
+		<h2 class="w3ls_head">Product Managing</h2>
+			<div class="grid_3 grid_4 w3layouts">
+				<h3 class="hdg">Product Adding</h3>
+				<form action="/adminproduct/" method="post" enctype="multipart/form-data">{% csrf_token %}
+					<div class="input_field">
+						<label for="product_name">Product Name:</label>
+						<input type="text" id="product_name" placeholder="Product Name" name="p_name" required>
+					</div>
+					<div class="input_field">
+						<label for="product_name">Product Price:</label>
+						<input type="text" id="product_Price" placeholder="Product Price" name="p_price" required>
+					</div>
+			
+					<div class="input_field">
+						<label for="category">Category:</label>
+						<select id="category" name="p_category" class="form-select" required>
+							<option value="">Category</option>
+							<option value="MEN">Men</option>
+							<option value="Ladies">Ladies</option>
+							<option value="Men Shirt">Men Shirt</option>
+							<option value="Ladies Shirt">Ladies Shirt</option>
+						</select>
+					</div>
+			
+					<div class="input_field">
+						<label for="description">Description:</label>
+						<input type="text" id="description" placeholder="Description" name="p_description" required>
+					</div>
+			
+					<div class="input_field">
+						<label for="fileToUpload">Image:</label>
+						<input type="file"  id="fileToUpload" name="p_image" accept="image/*">
+					</div>
+			
+					<div class="input_field">
+						<label for="size">Size:</label>
+						<select name="p_size" id="size" class="form-select" required>
+							<option value="">Select Size</option>
+							<option value="S">S</option>
+							<option value="M">M</option>
+							<option value="L">L</option>
+							<option value="XL">XL</option>
+						</select>
+					</div>
+			
+					<div class="text-center">
+						<button type="submit">Add Product</button>
+					</div>
+				</form>
+			</div>
+		
+			
+		
+
+<!--main content end-->
+</section>
+{% endblock %}
+<script src="/static/admin/js/bootstrap.js"></script>
+<script src="/static/admin/js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="/static/admin/js/scripts.js"></script>
+<script src="/static/admin/js/jquery.slimscroll.js"></script>
+<script src="/static/admin/js/jquery.nicescroll.js"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="/static/admin/js/flot-chart/excanvas.min.js"></script><![endif]-->
+<script src="/static/admin/js/jquery.scrollTo.js"></script>
+</body>
+</html>
