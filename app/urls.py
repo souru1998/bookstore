@@ -17,11 +17,12 @@ urlpatterns = [
     path('blogrightsidebar/',views.blogrightsidebar),
     path('blogsingle/',views.blogsingle),
     path('buttons/',views.buttons),
+    path('buyall/',views.buyall),
     
 
     path('cart/',views.cart),
     path('addingproducttocart/',views.addingproducttocart),
-    path('cartupdate/',views.cartupdate),
+    path('cartupdates/',views.cartupdate),
     path('cartremove/',views.cart_remove),
     # path('cart_remove/',views.cart_remove),
 

@@ -1,5 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
+
+
+<style>
+  /* Style for the button */
+  button {
+    background-color: #28292a;
+    border: none;
+    color: white;
+
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 0px;
+    cursor: pointer;
+    margin-left: 35%;
+    margin-top: 40px;
+    width: 30%;
+  }
+
+  /* Hover effect */
+  button:hover {
+    background-color: #101111;
+  }
+</style>
+
+
+
+
+
 	
 
 <section class="page-header">
@@ -20,8 +51,8 @@
 
 
 <div class="" style="float: right;text-align: center;margin-right: 90px;">
-  <label style="font-size: 20px;" for="total">Shop Total:</label>
-  <input value="{{total}}" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-weight:900;" type="text" id="number" readonly>
+  <label style="font-size: 20px;color: red;" for="total">Shop Total:</label>
+  <input value="{{total}}" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-weight:900; font-size: x-large;text-align: center;border-color: none;" type="text" id="number" readonly>
 </div>
 <div class="page-wrapper">
  
@@ -32,7 +63,7 @@
           <div class="block">
             <div class="product-list">
               {% for i in cartdata %}
-              <form method="post">
+              
                 <table class="table">
                   <thead>
                     <tr>
@@ -40,6 +71,7 @@
                       <th class="">Item Price</th>
                       <th class="">Actions</th>
                       <th class="">Quantity</th>
+                      <th class="">Total</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -50,35 +82,43 @@
                           <a href="#!">{{i.items_id.productname}}</a>
                         </div>
                       </td>
-                      <td class="">{{i.total}}</td>
+                      <td class="">{{i.items_id.productprice}}</td>
                       <td class="">
                         <a class="product-remove" href="/cartremove/?prdid={{i.id}}">Remove</a>
                       </td>
                       <td>
-                        <select name="size" value="{{i.quantity}}" id="size"  class="form-select" required>
-                          <option value="{{i.quantity}}">{{i.quantity}}</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                        </select>
-                      </td>     
+                        <form action="/cartupdates/?prdid={{i.id}}" method="post" >
+                          {% csrf_token %}
+                          <select name="size" id="size" class="select" onchange="this.form.submit()">
+                            <option value="{{i.quantity}}">{{i.quantity}}</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                          </select>
+                        </form>
+                      </td> 
+                      <td class="">{{i.total}}</td>    
                    </tr>
                   </tbody>
                 </table>
-                <a href="/checkout/" class="btn btn-main pull-right">Checkout</a>
-              </form>
+                <a href="/checkout/?checkid={{i.id}}" class="btn btn-main pull-right">Checkout</a>
+              
               {% endfor %}
             </div>
+            
           </div>
+        
         </div>
       </div>
       
     </div>
+
    
   </div>
- 
+  <a href="/buyall/"><button> buy all</button></a>
 </div>
+
 
 {% endblock %}

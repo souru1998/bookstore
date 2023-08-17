@@ -88,6 +88,19 @@ def blogsingle(request):
 def buttons(request):
     return render(request,'buttons.html')
 
+
+#_________________________________________________________________________
+def buyall(request):
+    if request.session.has_key('id'):
+        user = request.session['id']
+        carttable.objects.filter(user_id=user)
+        return render(request,'buyall.html')
+    else:
+        return render(request,'buyall.html')
+      
+    
+
+
 #__________________________________________________________________________
 
 def cart(request):
@@ -96,6 +109,9 @@ def cart(request):
         data = carttable.objects.filter(user_id=user)
         total = 0
         for x in data:
+            # qty = x.quantity
+            # price = x.items_id.productprice
+
             total += float(x.total)
         cartstore = carttable.objects.filter(user_id =user)
         return render(request,'cart.html',{'cartdata':cartstore,'total':total})
@@ -168,18 +184,24 @@ def addingproducttocart(request):
 #cart update
 
 def cartupdate(request):
-    cart_id = request.GET['prdid']
-    quantity = request.POST['qnty']
-    cart = carttable.objects.filter(id=cart_id)
-    for i in cart:
-        price=i.items_id.newprice
-    newprice = float(price)*int(quantity)
-    carttable.objects.filter(id=cart_id).update(quantity=quantity,total=newprice)
-    return render(request,'shop.html')
+    if request.method == 'POST':
+        cart_id = request.GET['prdid'] 
+        quantity = request.POST['size']
+        cart = carttable.objects.filter(id=cart_id)
+        newprice=0
+        for i in cart:
+            price=i.items_id.productprice
+            
+            print("ppppppppp",price)
+        newprice = float(price)*int(quantity)
+        carttable.objects.filter(id=cart_id).update(quantity=quantity,total=newprice)
+    
+        return redirect('/cart/')
 
 
+    else:
+        return render(request,'shop.html')
 # _____________________________________________________________________________________
-
 #cart remove
 def cart_remove(request):
     cart_id = request.GET['prdid']
@@ -189,7 +211,10 @@ def cart_remove(request):
 # _____________________________________________________________________________________
 
 def checkout(request):
-    return render(request,'checkout.html')
+    check_id = request.GET['checkid']
+    add=carttable.objects.filter(id=check_id)
+    return render(request,'checkout.html',{'cartdata':add})
+#______________________________________________________________________________________
 
 def comingsoon(request):
     return render(request,'comingsoon.html')

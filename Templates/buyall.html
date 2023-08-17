@@ -25,7 +25,7 @@
             <div class="col-md-8">
                <div class="block billing-details">
                   <h4 class="widget-title">Billing Details</h4>
-                  {% for i in cartdata %}
+                  {% for i in buydata %}
                   
 
                   <form class="checkout-form">
@@ -86,6 +86,7 @@
                   <div class="block">
                      <h4 class="widget-title">Order Summary</h4>
                      <div class="media product-card">
+                <!-- {% for i in buydata %} -->
                         <a class="pull-left" href="product-single.html">
                            <img class="media-object" src="{{i.items_id.productimage.url}}" alt="Image" />
                         </a>
@@ -95,6 +96,7 @@
                            <span class="remove" >Remove</span>
                         </div>
                      </div>
+                <!-- {% endfor %} -->
                      <div class="discount-code">
                         <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
                      </div>
@@ -136,7 +138,7 @@
                </form>
             </div>
          </div>
-         {% endfor %}
+         <!-- {% endfor %} -->
 
       </div>
 
