@@ -93,8 +93,11 @@ def buttons(request):
 def buyall(request):
     if request.session.has_key('id'):
         user = request.session['id']
-        carttable.objects.filter(user_id=user)
-        return render(request,'buyall.html')
+        dataall = carttable.objects.filter(user_id=user)
+        total = 0
+        for i in dataall:
+            total += float(i.total)
+        return render(request,'buyall.html',{'buydata':dataall,'total':total})
     else:
         return render(request,'buyall.html')
       
