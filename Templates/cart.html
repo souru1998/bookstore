@@ -31,7 +31,7 @@
 
 
 
-	
+
 
 <section class="page-header">
 	<div class="container">
@@ -115,10 +115,55 @@
       
     </div>
 
-   
+  
   </div>
-  <a href="/buyall/"><button> buy all</button></a>
+  <a href="/buyall/"><button type="button" id="checkout-button"> buy all</button></a>
+
 </div>
+
+
+
+
+
+<!-- <script>
+  $(document).ready(function() {
+      $("#checkout-button").click(function() {
+          // Fetch CSRF token from the cookie
+          var csrftoken = Cookies.get('csrftoken'); // You may need to include a library like js-cookie for this
+
+          // Fetch order details from the server
+          $.ajax({
+              url: "/payment/", // URL of your Django view
+              type: "POST",
+              dataType: "json",
+              beforeSend: function(xhr) {
+                  // Include the CSRF token in the request headers
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              },
+              success: function(data) {
+                  // Initialize Razorpay checkout
+                  var options = {
+                      key: "rzp_test_7hCWqiwACtPv", // Replace with your Razorpay Key ID
+                      amount: data.amount,
+                      currency: data.currency,
+                      order_id: data.id,
+                      name: "Your Company Name",
+                      description: "Payment for products/services",
+                      handler: function(response) {
+                          // Handle successful payment
+                          alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+                      }
+                  };
+                  
+                  var rzp = new Razorpay(options);
+                  rzp.open();
+              }
+          });
+      });
+  });
+</script> -->
+
+
 
 
 {% endblock %}

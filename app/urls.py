@@ -67,6 +67,11 @@ urlpatterns = [
     path('productdelete/',views.productdelete),
 
 
+
+    #payments
+    path('payment/',views.payment),
+
+
     
 
 

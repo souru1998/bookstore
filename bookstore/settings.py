@@ -143,3 +143,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sayoojsayu918@gmail.com' 
 EMAIL_HOST_PASSWORD = 'ibgfnsazrgrllwtj'
 
+
+RAZOR_KEY_ID ='rzp_test_QtSg1knCBDQ1Yv' 
+RAZOR_KEY_SECRET = 'v2rrB9McFhnb0Wqdho7Wl8yj'
+

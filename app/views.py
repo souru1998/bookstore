@@ -5,6 +5,16 @@ from .models import *
 from django.core.mail import send_mail
 from django.conf import settings
 import os
+import razorpay
+
+from django.http import JsonResponse
+import json
+import requests
+
+
+
+
+
 
 # Create your views here.
 def index(request):
@@ -97,7 +107,28 @@ def buyall(request):
         total = 0
         for i in dataall:
             total += float(i.total)
-        return render(request,'buyall.html',{'buydata':dataall,'total':total})
+
+        client = razorpay.Client(auth=("rzp_test_QtSg1knCBDQ1Yv", "v2rrB9McFhnb0Wqdho7Wl8yj"))
+        # Create an order
+        order_amount = 10000 # Amount in paise (e.g., 1000 paise = ₹10)
+        order_currency = "INR"
+        order_receipt = "order_receipt_12345" # Generate a unique receipt ID for each order
+        
+        payment_order = client.order.create({
+            'amount': order_amount,
+            'currency': order_currency,
+            'receipt': order_receipt,
+            'payment_capture': 1 # Auto capture payments
+        })
+        payment_order_id = payment_order['id']
+        context = {
+            'amount':500,
+            'api_key': 'rzp_test_7hCWqiwACtPv',
+            'order_id':payment_order_id
+        }
+
+
+        return render(request,'buyall.html',{'buydata':dataall,'total':total,"context":context})
     else:
         return render(request,'buyall.html')
       
@@ -442,6 +473,37 @@ def productdelete(request):
         return redirect('/adminindex/')
 
 #_________________________________________________________________________________________
+#PAYMENTS
+
+client = razorpay.Client(auth=("rzp_test_7hCWqiwACtPv", "A34QNrCreBhMLXrKhXl1lXut"))
+def payment(request):
+
+
+# Initialize Razorpay client
+    
+    
+    # Create an order
+    order_amount = 10000 # Amount in paise (e.g., 1000 paise = ₹10)
+    order_currency = "INR"
+    order_receipt = "order_receipt_12345" # Generate a unique receipt ID for each order
+    
+    payment_order = client.order.create({
+        'amount': order_amount,
+        'currency': order_currency,
+        'receipt': order_receipt,
+        'payment_capture': 1 # Auto capture payments
+    })
+    payment_order_id = payment_order['id']
+    context = {
+        'amount':500,
+        'api_key': 'rzp_test_7hCWqiwACtPv',
+        'order_id':payment_order_id
+    }
+    
+    return render(request,'buyall.html',context)
+   
+
+   
 
 
 
