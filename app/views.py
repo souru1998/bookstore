@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 import os
 import razorpay
+from django.views.decorators.cache import never_cache
 
 from django.http import JsonResponse
 import json
@@ -29,17 +30,17 @@ def login(request):
         login_password = request.POST['password']
 
 
-        subject = 'Logged one person'
-        message = f'email:{login_email},'
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = [settings.EMAIL_HOST_USER, ]
-        send_mail(subject, message,email_from, recipient_list)
-        ####
-        subject = 'WELCOME TO AVITO'
-        message = f'hello -{login_email}, Thanks for choosing us, lets shop'
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = [login_email, ]
-        send_mail(subject,message,email_from,recipient_list)
+        # subject = 'Logged one person'
+        # message = f'email:{login_email},'
+        # email_from = settings.EMAIL_HOST_USER
+        # recipient_list = [settings.EMAIL_HOST_USER, ]
+        # send_mail(subject, message,email_from, recipient_list)
+        # ####
+        # subject = 'WELCOME TO AVITO'
+        # message = f'hello -{login_email}, Thanks for choosing us, lets shop'
+        # email_from = settings.EMAIL_HOST_USER
+        # recipient_list = [login_email, ]
+        # send_mail(subject,message,email_from,recipient_list)
 
 
 
@@ -55,11 +56,13 @@ def login(request):
 
         return render(request,'login.html')
     
+
+@never_cache    
 def logout(request):
     if request.session.has_key('id'):
         del request.session['id']
         del request.session['fname']
-    return render(request,'index.html')
+    return HttpResponseRedirect('/')
 # -----------------------------------------------------------------------------------
     
 
